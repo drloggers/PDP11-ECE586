@@ -13,11 +13,8 @@ function Branch_instruction;
       
       BR: //Uncoditional Branch
       begin
-
-		$fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BR",R[PC]+TargetAddress,1);
-        
-      R[PC] = R[PC]+TargetAddress;
-      
+        $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BR",R[PC]+TargetAddress,1);
+        R[PC] = R[PC]+TargetAddress;
       end
       
       BNE:
@@ -25,8 +22,8 @@ function Branch_instruction;
         
       if(!PSW[ZERO])
             begin
-              R[PC]= R[PC]+TargetAddress;
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BNE",R[PC]+TargetAddress,1);
+              R[PC]= R[PC]+TargetAddress;
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BNE",R[PC]+TargetAddress,0);
@@ -36,9 +33,9 @@ function Branch_instruction;
         begin
         if(PSW[PSW[ZERO]])
         begin
-              R[PC]= (R[PC]+TargetAddress);
-              $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BEQ",R[PC]+TargetAddress,1);
-        end
+          $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BEQ",R[PC]+TargetAddress,1);
+          R[PC]= (R[PC]+TargetAddress);
+       end
       else
         $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BEQ",R[PC]+TargetAddress,0);
       end
@@ -47,8 +44,8 @@ function Branch_instruction;
         begin
         if(!PSW[NEGATIVE])
           begin
-            R[PC]= (R[PC]+TargetAddress);
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BPL",R[PC]+TargetAddress,1);
+            R[PC]= (R[PC]+TargetAddress);
           end
         else
           $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BPL",R[PC]+TargetAddress,0);
@@ -58,9 +55,9 @@ function Branch_instruction;
           begin
           if(PSW[NEGATIVE])
           begin
+            $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BMI",R[PC]+TargetAddress,1);
             R[PC]= (R[PC]+TargetAddress);
             PSW[PSW[NEGATIVE]] = 0;
-            $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BMI",R[PC]+TargetAddress,1);
           end
         else
           $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BMI",R[PC]+TargetAddress,0);
@@ -71,9 +68,9 @@ function Branch_instruction;
           begin
           if(!PSW[OVERFLOW])
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BVC",R[PC]+TargetAddress,1);
-            end
+              R[PC]= (R[PC]+TargetAddress);
+          end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BVC",R[PC]+TargetAddress,0);
           end
@@ -81,9 +78,9 @@ function Branch_instruction;
           BVS:begin
           if(PSW[OVERFLOW])
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BVS",R[PC]+TargetAddress,1);
-            end
+              R[PC]= (R[PC]+TargetAddress);
+           end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BVS",R[PC]+TargetAddress,0);
           end
@@ -92,8 +89,8 @@ function Branch_instruction;
           begin
           if(!PSW[CARRY])
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BCC",R[PC]+TargetAddress,1);
+              R[PC]= (R[PC]+TargetAddress);             
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BCC",R[PC]+TargetAddress,0);
@@ -103,8 +100,8 @@ function Branch_instruction;
           begin
           if(PSW[CARRY])
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLO",R[PC]+TargetAddress,1);
+              R[PC]= (R[PC]+TargetAddress);
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLO",R[PC]+TargetAddress,0);
@@ -114,8 +111,8 @@ function Branch_instruction;
           begin
           if(!(PSW[NEGATIVE] || PSW[OVERFLOW]))
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BGE",R[PC]+TargetAddress,1);
+              R[PC]= (R[PC]+TargetAddress);
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BGE",R[PC]+TargetAddress,0);
@@ -125,8 +122,8 @@ function Branch_instruction;
           begin
           if(PSW[NEGATIVE] || PSW[OVERFLOW])
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLT",R[PC]+TargetAddress,1);
+              R[PC]= (R[PC]+TargetAddress);
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLT",R[PC]+TargetAddress,0);
@@ -136,8 +133,8 @@ function Branch_instruction;
           begin
           if(!(PSW[ZERO] || (PSW[NEGATIVE] ^ PSW[OVERFLOW])))
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BGT",R[PC]+TargetAddress,1);
+              R[PC]= (R[PC]+TargetAddress);
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BGT",R[PC]+TargetAddress,0);
@@ -147,8 +144,8 @@ function Branch_instruction;
           begin
          if(PSW[ZERO] || (PSW[NEGATIVE] ^ PSW[OVERFLOW]))
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLE",R[PC]+TargetAddress,1);
+              R[PC]= (R[PC]+TargetAddress);
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLE",R[PC]+TargetAddress,0);
@@ -158,9 +155,9 @@ function Branch_instruction;
           begin
           if(!(PSW[CARRY] && PSW[ZERO]))
              begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BHI",R[PC]+TargetAddress,1);
-             end
+              R[PC]= (R[PC]+TargetAddress);
+            end
            else
              $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BHI",R[PC]+TargetAddress,0);
            end
@@ -168,8 +165,8 @@ function Branch_instruction;
           BLOS:begin
           if(PSW[CARRY]&&PSW[ZERO])
             begin
-              R[PC]= (R[PC]+TargetAddress);
               $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLOS",R[PC]+TargetAddress,1);
+              R[PC]= (R[PC]+TargetAddress);
             end
           else
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLOS",R[PC]+TargetAddress,0);

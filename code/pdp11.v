@@ -8,6 +8,7 @@ integer scan_file,eof;
 integer mem_fill_ptr;
 integer trace_file;
 integer branch_file;
+integer i;
 
 reg [8*256:0] memory_image;
 
@@ -47,6 +48,12 @@ else
   $display("Simulation Halted. Please spcecify a trace file to run.");
   $stop;
   end
+  
+    if(debug)
+      begin
+        for(i=0;i<(64*1024);i=i+1)
+        mem[i]=i;
+      end
 
  //Call to Memory Fill function. Reads specified file and copies in memory array  
     if(mem_fill(0))

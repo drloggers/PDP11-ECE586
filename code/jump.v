@@ -17,6 +17,7 @@ function jump_instruction;
                 result = read_word(instruction[5:3], instruction[2:0]);
                 if(result%2 == 0)
                 begin
+                  $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"JMP",result,1);
                    R[PC] = result;
                 end                  
                 else
@@ -26,6 +27,7 @@ function jump_instruction;
            RTS:
            begin
                 result = read_word(instruction[5:3],instruction[2:0]);
+                $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"RTS",result,1);
                 R[PC] = result;          
                 //POP Pending    
            end

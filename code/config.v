@@ -1,5 +1,9 @@
 // Parameters
 
+//Debug Options
+//Setting debug high does a memory fill upon initialization with its own index
+parameter debug=1;
+
 //Parameters of PSW
 parameter CARRY=0,
           OVERFLOW=1,
