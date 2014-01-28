@@ -313,10 +313,11 @@ function JSR_instruction;
 input [15:0]instruction;
 reg [15:0]temp;
 reg [15:0]result;
+reg dummy;
 begin
 	temp = instruction[5:0];
 	result = read_word(instruction[5:3],instruction[2:0]);
-	//push(read_word(0,instruction[8:6]));
+	dummy = push(read_word(0,instruction[8:6]));
 	R[instruction[8:6]] = R[PC];
 	$fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"JSR",temp,1);
 	R[PC] = temp;

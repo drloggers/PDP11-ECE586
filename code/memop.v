@@ -70,6 +70,7 @@ function mem_write;
     mem[address]=data;
       
     $fwrite(trace_file,"%0d %6o\n",1,address);
+	mem_write = 1;
   end
   
 endfunction

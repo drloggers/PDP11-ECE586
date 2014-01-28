@@ -30,6 +30,7 @@ reg [MWIDTH:0]mem[MSIZE:0];
 `include"single_operand.v"
 `include"branch.v"
 `include"jump.v"
+`include"stack_operation.v"
 
 
 
