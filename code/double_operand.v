@@ -20,6 +20,18 @@ begin
           begin
             if(write_word(instruction[5:3],instruction[2:0],source_word))
               $display("Error during MOV Instruction");
+              
+              if(!(result[15:0]))
+             PSW[ZERO]=1;
+             else 
+             PSW[ZERO]=0;
+             
+            if(result[15])
+             PSW[NEGATIVE]=1;
+           else
+             PSW[NEGATIVE]=0;
+             
+             PSW[OVERFLOW]=0;
           end
           
           MOVB:
