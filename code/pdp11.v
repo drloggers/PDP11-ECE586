@@ -96,6 +96,11 @@ else
 						$display("Invalid Instruction");
 					end
 					end
+				else if(instruction[8:6] == 3'b011)
+				begin
+					if(call_Swab(instruction))
+						$display("swab failed");
+				end
         else
           begin
           $display("The instruction is of Type Condition Branch Instruction OR Zero Operand");
@@ -124,7 +129,33 @@ else
     end
     end
 
-   
+   function call_Swab;
+		input [15:0]instruction;
+		reg [15:0]result;
+		reg [7:0]swapingReg;
+		begin
+					result = read_word(instruction[5:3],instruction[2:0]);
+					swapingReg = result[7:0];
+					result = {swapingReg,result[15:8]};
+					if(write_word(instruction[5:3],instruction[2:0],result))
+						$display("Error during SWAB instruction");
+
+					if(result[7:0] == 0)
+						PSW[ZERO] = 1;
+					else 
+						PSW[ZERO] = 0;
+
+					if(result[7] == 1)
+          	PSW[NEGATIVE] = 1;
+					else
+						PSW[NEGATIVE] = 0;
+
+						PSW[OVERFLOW] = 0;
+						PSW[CARRY] = 0;
+		call_Swab = 0;
+				end
+			
+endfunction
 
 
 

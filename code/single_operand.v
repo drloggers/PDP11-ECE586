@@ -10,27 +10,6 @@ function single_operand;
 	begin
 		single_operand = 0;
 			case(instruction[10:6])
-				SWAB:
-				begin
-					result = read_word(instruction[5:3],instruction[2:0]);
-					swapingReg = result[7:0];
-					result = {swapingReg,result[15:8]};
-					if(write_word(instruction[5:3],instruction[2:0],result))
-						$display("Error during CLR instruction");
-
-					if(result[7:0] == 0)
-						PSW[ZERO] = 1;
-					else 
-						PSW[ZERO] = 0;
-
-					if(result[7] == 1)
-          	PSW[NEGATIVE] = 1;
-					else
-						PSW[NEGATIVE] = 0;
-
-						PSW[OVERFLOW] = 0;
-						PSW[CARRY] = 0;
-				end
 				CLR:
 				begin
 					if(write_word(instruction[5:3],instruction[2:0],0))

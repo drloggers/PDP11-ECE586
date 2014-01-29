@@ -29,7 +29,7 @@ function jump_instruction;
                 result = read_word(instruction[5:3],instruction[2:0]);
                 $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"RTS",result,1);
                 R[PC] = result;          
-                //POP Pending    
+                R[instruction[2:0]] = pop(0);    
            end
   	endcase
 end       

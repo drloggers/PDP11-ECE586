@@ -56,7 +56,7 @@ parameter BR  = 4'b0001,
           BMI = 4'b1001,
           BVC = 4'b1100,
           BVS = 4'b1101,
-          BCC= 4'b1110,
+          BCC = 4'b1110,
           BLO = 4'b1111,
           BGE = 4'b0100,
           BLT = 4'b0101,
@@ -71,8 +71,9 @@ parameter JMP = 3'b001,
 					RTS = 3'b010;
 
 //Parameters of Single Operand Instructions
-parameter SWAB = 10'b0000000000,
-					CLR  = 5'b01000,
+
+//SWAB is added as seperate function due to conflict with branch instruction
+parameter CLR  = 5'b01000,
 					COM  = 5'b01001,
 					INC  = 5'b01010,
 					DEC  = 5'b01011,
