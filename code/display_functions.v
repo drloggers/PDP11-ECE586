@@ -7,7 +7,7 @@ function displayMemory;
 		if(indicate)
 		begin
 		$display("\nMemory Location : Data");
-	 for(i=0;i<memory_size;i=i+1)
+	 for(i=0;i<=MSIZE;i=i+1)
 		begin
         if (mem[i]!== 8'bxxxxxxxx)
 					$display(" %d 		: %o",i,mem[i]);

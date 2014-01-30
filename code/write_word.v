@@ -5,6 +5,7 @@ function write_word;
   input[2:0]mode;
   input[2:0]destination;
   input[15:0]data;
+  
   reg temp;
   reg [15:0]address;
   reg [15:0]X;
@@ -19,59 +20,62 @@ function write_word;
       
       REGISTER_DEFERRED:
       begin
-        temp=mem_write(R[destination],data[7:0]);
-        temp=mem_write(R[destination]+1,data[15:8]);
+        if(mem_write(R[destination],data,word))
+          $display("Error during write in Register Deferred");
+        
         
       end
       
       AUTOINCREMENT:
       begin
-        temp=mem_write(R[destination],data[7:0]);
-        temp=mem_write(R[destination]+1,data[15:8]);
-        
-        R[destination]=R[destination]+2;
+        if(mem_write(R[destination],data,word))
+          $display("Error during write in Autoincrement");
+              
+         R[destination]=R[destination]+2;
       end
       
       AUTOINCREMENT_DEFERRED:
       begin
-        address={mem_read(R[destination]+1,0),mem_read(R[destination],0)};
-        temp=mem_write(address,data[7:0]);
-        temp=mem_write(address+1,data[15:8]);
+        address=mem_read(R[destination],data,word);
+        if(mem_write(address,data,word))
+          $display("Error during write in Autoincrement Deferred");
+        
          R[destination]=R[destination]+2;
       end
       
       AUTODECREMENT:
       begin
         R[destination]=R[destination]-2;
-        temp=mem_write(R[destination],data[7:0]);
-        temp=mem_write(R[destination]+1,data[15:8]);
+        if(mem_write(R[destination],data,word))
+          $display("Error during write in Autodecrement");
+        
         
       end
       
       AUTODECREMENT_DEFERRED:
       begin
         R[destination]=R[destination]-2;
-        address={mem_read(R[destination]+1,0),mem_read(R[destination],0)};
-        temp=mem_write(address,data[7:0]);
-        temp=mem_write(address+1,data[15:8]);
+        address=mem_read(R[destination],data,word);
+        if(mem_write(address,data,word))
+        $display("Error during write in Autoincrement Deferred");
        
       end
       
       INDEX:
       begin
-         X={mem_read(R[PC]+1,0),mem_read(R[PC],0)};
-         temp=mem_write(R[destination]+X,data[7:0]);
-          temp=mem_write(R[destination]+X+1,data[15:8]);
+         X=mem_read(R[PC],word,data);
+        if(mem_write(R[destination]+X,data,word))
+          $display("Error during write in Index");
             
          R[PC]=R[PC]+2;
       end
       
      INDEX_DEFERRED:
       begin
-        X={mem_read(R[PC]+1,0),mem_read(R[PC],0)};
-        address={mem_read(R[destination]+X+1,0),mem_read(R[destination]+X,0)};
-        temp=mem_write(address,data[7:0]);
-        temp=mem_write(address+1,data[15:8]);
+        X=mem_read(R[PC],word,data);
+        address=mem_read(R[destination]+X,word,data);
+       if(mem_write(address,data,word))
+        $display("Error during write in Index Deferred");
      
          R[PC]=R[PC]+2;
       end

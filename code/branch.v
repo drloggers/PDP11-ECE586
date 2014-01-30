@@ -31,7 +31,7 @@ function Branch_instruction;
       
         BEQ:
         begin
-        if(PSW[ZERO])
+        if(PSW[PSW[ZERO]])
         begin
           $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BEQ",R[PC]+TargetAddress,1);
           R[PC]= (R[PC]+TargetAddress);

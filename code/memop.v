@@ -43,40 +43,77 @@ function mem_fill;
 endfunction
 
 
-function [7:0]mem_read;
+function [15:0]mem_read;
   input [15:0]address;
+  input byte_read;
   input Instruction_Read;
-	reg [7:0]result;
+
+  reg [7:0]result;
   
   begin
-		result = mem[address];
+    
+    if(!byte_read & address[0])
+      $display("Error in Address. Expected word aligned address but obtained %o",address);
+      
+      
+    if(byte_read)  
+      begin
+      
+	result = mem[address];
 		if (result === 8'bxxxxxxxx)
 			$display("Error : You are trying to access garbage data!");
 		else
 		begin
     mem_read=result;
+      
+      if(Instruction_Read)
+        $display("Fatal Error: Instruction read CAN'T be a byte read");
+        
+        $fwrite(trace_file,"%0d %6o\n",data_read,address);
+      end
+end
+  else
+    begin
+    mem_read={mem[address+1],mem[address]};
     
     //Trace generation 
       if(Instruction_Read)
-      $fwrite(trace_file,"%0d %6o\n",2,address);
+        begin
+      $fwrite(trace_file,"%0d %6o\n%0d %6o\n",instruction_fetch,address,instruction_fetch,address+1);
+        end
     else
-      $fwrite(trace_file,"%0d %6o\n",0,address);
-		end
+      $fwrite(trace_file,"%0d %6o\n%0d %6o\n",data_read,address,data_read,address+1);
+    end
+
   end
   
 endfunction
+
   
   
 function mem_write;
   input [15:0]address;
-  input [7:0]data;
+  input [15:0]data;
+  input byte_write;
   
   begin
     
-    mem[address]=data;
+    if(!byte_write & address[0])
+      $display("Error in Address during right. Expected word aligned address but obtained %o",address);
       
-    $fwrite(trace_file,"%0d %6o\n",1,address);
-	mem_write = 1;
+    if(byte_write)  
+    begin
+     mem[address]=data;
+     $fwrite(trace_file,"%0d %6o\n",data_write,address);
+    end
+  else
+    begin
+       {mem[address+1],mem[address]}=data;
+       $fwrite(trace_file,"%0d %6o\n%0d %6o",data_write,address,data_write,address+1);
+    end
+    
+   
+	mem_write = 0;
   end
   
 endfunction

@@ -16,47 +16,47 @@ function [15:0]read_word;
       
       REGISTER_DEFERRED:
       begin
-       read_word={mem_read(R[source]+1,0),mem_read(R[source],0)};
+       read_word=mem_read(R[source],word,data);
       end
       
       AUTOINCREMENT:
       begin
-        read_word={mem_read(R[source]+1,0),mem_read(R[source],0)};
+        read_word=mem_read(R[source],word,data);
         R[source]=R[source]+2;
       end
       
       AUTOINCREMENT_DEFERRED:
       begin
-         address={mem_read(R[source]+1,0),mem_read(R[source],0)};
-        read_word={mem_read(address+1,0),mem_read(address,0)};
+         address=mem_read(R[source],word,data);
+        read_word=mem_read(address,word,data);
         R[source]=R[source]+2;
       end
       
       AUTODECREMENT:
       begin
         R[source]=R[source]-2;
-        read_word={mem_read(R[source]+1,0),mem_read(R[source],0)};
+        read_word=mem_read(R[source],word,data);
       end
       
       AUTODECREMENT_DEFERRED:
       begin
         
         R[source]=R[source]-2;
-        address={mem_read(R[source]+1,0),mem_read(R[source],0)};
-       read_word={mem_read(address+1,0),mem_read(address,0)};
+        address=mem_read(R[source],word,data);
+        read_word=mem_read(address,word,data);
       end
       
       INDEX:
       begin
-        X={mem_read(R[PC]+1,0),mem_read(R[PC],0)};
-         read_word= {mem_read(R[source]+X+1,0),mem_read(R[source]+X,0)};
+        X=mem_read(R[PC],word,data);
+         read_word= mem_read(R[source]+X,word,data);
          R[PC]=R[PC]+2;
       end
       
      INDEX_DEFERRED:
       begin
-         X={mem_read(R[PC]+1,0),mem_read(R[PC],0)};
-         read_word= {mem_read(mem_read(R[source]+X+1,0),0),mem_read(mem_read(R[source]+X,0),0)};
+         X=mem_read(R[PC],word,data);
+         read_word= mem_read(R[source]+X,word,data);
          R[PC]=R[PC]+2;
       end
     endcase

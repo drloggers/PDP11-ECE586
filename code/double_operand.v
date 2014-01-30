@@ -5,7 +5,10 @@ function double_operand;
   
   reg[15:0]source_word;
   reg[15:0]destination_word;
-  reg[16:0]result; 
+  reg[16:0]result;
+
+
+
 
 begin
   double_operand=0;
@@ -18,12 +21,12 @@ begin
             if(write_word(instruction[5:3],instruction[2:0],source_word))
               $display("Error during MOV Instruction");
               
-              if(!(result[15:0]))
+              if(!(source_word))
              PSW[ZERO]=1;
              else 
              PSW[ZERO]=0;
              
-            if(result[15])
+            if(source_word[15])
              PSW[NEGATIVE]=1;
            else
              PSW[NEGATIVE]=0;
