@@ -46,16 +46,22 @@ endfunction
 function [7:0]mem_read;
   input [15:0]address;
   input Instruction_Read;
+	reg [7:0]result;
   
   begin
-    mem_read=mem[address];
+		result = mem[address];
+		if (result === 8'bxxxxxxxx)
+			$display("Error : You are trying to access garbage data!");
+		else
+		begin
+    mem_read=result;
     
     //Trace generation 
       if(Instruction_Read)
       $fwrite(trace_file,"%0d %6o\n",2,address);
     else
       $fwrite(trace_file,"%0d %6o\n",0,address);
-
+		end
   end
   
 endfunction
