@@ -5,10 +5,7 @@ function double_operand;
   
   reg[15:0]source_word;
   reg[15:0]destination_word;
-  reg[16:0]result;
-
-
-
+  reg[16:0]result; 
 
 begin
   double_operand=0;

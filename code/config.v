@@ -2,7 +2,12 @@
 
 //Debug Options
 //Setting debug high does a memory fill upon initialization with its own index
-parameter debug=1;
+parameter debug=0,
+					showPSW = 1,
+					showRegisters = 1,
+					showMemory = 1;
+
+parameter memory_size=64*1024; 
 
 //Parameters of PSW
 parameter CARRY=0,

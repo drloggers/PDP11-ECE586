@@ -19,7 +19,6 @@ reg [15:0]dummy;
 reg done;
 
 //Declaration of Register File & PSW 
-
 reg [15:0]R[7:0];
 reg [15:0]PSW;
 reg [MWIDTH:0]mem[MSIZE:0];
@@ -31,7 +30,7 @@ reg [MWIDTH:0]mem[MSIZE:0];
 `include"branch.v"
 `include"jump.v"
 `include"stack_operation.v"
-
+`include"display_functions.v"
 
 
 
@@ -52,7 +51,7 @@ else
   
     if(debug)
       begin
-        for(i=0;i<(64*1024);i=i+1)
+        for(i=0;i<memory_size;i=i+1)
         mem[i]=i;
       end
 
@@ -70,7 +69,7 @@ else
     begin
       
       //Instruction Fetch
-    instruction={mem_read(R[PC]+1,1),mem_read(R[PC],1)};
+   instruction={mem_read(R[PC]+1,1),mem_read(R[PC],1)};
     R[PC]=R[PC]+2;
     
     //Instruction Decode+Execute beyond here
@@ -123,10 +122,11 @@ else
         $display("Invalid Instruction");
             
     end
-    endcase
-    
-    
+    endcase   
     end
+		if(displayMemory(showMemory));
+		if(displayRegister(showRegisters));
+		if(displayPSW(showPSW)); 
     end
 
    function call_Swab;
