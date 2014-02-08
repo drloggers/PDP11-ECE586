@@ -8,6 +8,10 @@ function Branch_instruction;
   begin
     Branch_instruction=0;
     TargetAddress=2*instruction[7:0];
+		if(TargetAddress[7] == 1'b1)
+			TargetAddress[15:8] = 8'b11111111;
+		else
+			 TargetAddress = TargetAddress; 
     
     case({instruction[15],instruction[10:8]})
       
@@ -31,7 +35,7 @@ function Branch_instruction;
       
         BEQ:
         begin
-        if(PSW[PSW[ZERO]])
+        if(PSW[ZERO])
         begin
           $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BEQ",R[PC]+TargetAddress,1);
           R[PC]= (R[PC]+TargetAddress);
