@@ -39,11 +39,11 @@ function displayPSW;
 		if(indicate)
 		begin
 		$display("\nFlags 			: Status");
-		$display("CARRY 			: %d",R[CARRY]);
-		$display("OVERFLOW     	   		: %d",R[OVERFLOW]);
-		$display("ZERO 			: %d",R[ZERO]);
-		$display("NEGATIVE         		 	: %d",R[NEGATIVE]);
-		$display("TRAP	 		: %d",R[TRAP]);
+		$display("CARRY 			: %d",PSW[CARRY]);
+		$display("OVERFLOW     	   		: %d",PSW[OVERFLOW]);
+		$display("ZERO 			: %d",PSW[ZERO]);
+		$display("NEGATIVE         		 	: %d",PSW[NEGATIVE]);
+		$display("TRAP	 		: %d",PSW[TRAP]);
 	displayPSW = 0;
 end
 	end
