@@ -43,7 +43,6 @@ function displayPSW;
 		$display("OVERFLOW     	   		: %d",PSW[OVERFLOW]);
 		$display("ZERO 			: %d",PSW[ZERO]);
 		$display("NEGATIVE         		 	: %d",PSW[NEGATIVE]);
-		$display("TRAP	 		: %d",PSW[TRAP]);
 	displayPSW = 0;
 end
 	end

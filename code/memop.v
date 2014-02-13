@@ -75,7 +75,6 @@ function [15:0]mem_read;
 end
   else
     begin
-      $display("%o  %o",mem[address+1],mem[address]);
       result={mem[address+1],mem[address]};
       if (result === {16{1'bx}})
 			$display("Warning : Read access from a memory location %6o that was never written",address);

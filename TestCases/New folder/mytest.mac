@@ -1,0 +1,5 @@
+JSR r5,start
+
+mov #34,r3
+start:
+mov #12,r0

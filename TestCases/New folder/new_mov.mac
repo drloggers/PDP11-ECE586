@@ -1,0 +1,46 @@
+; Immediate mode
+
+mov #400,PC
+mov #111,r0
+mov #77,(r0)
+mov #76,(r0)+
+mov #75,@(r0)+
+mov #74,-(r0)
+mov #73,@-(r0)
+mov #72,5(r0)
+mov #71,@5(r0)
+
+
+; absolute mode
+
+mov @#51,r1
+mov @#52,(r1)
+mov @#53,(r1)+
+mov @#54,@(r1)+
+mov @#55,-(r1)
+mov @#56,@-(r1)
+mov @#57,5(r1)
+mov @#60,@5(r1)
+
+; Relative mode
+
+mov 5,r2
+mov 5,(r2)
+mov 5,(r2)+
+mov 5,@(r2)+
+mov 5,-(r2)
+mov 5,@-(r2)
+mov 5,5(r2)
+mov 5,@5(r2)
+
+; Relative deferred
+
+mov @5,r3
+mov @5,(r3)
+mov @5,(r3)+
+mov @5,@(r3)+
+mov @5,-(r3)
+mov @5,@-(r3)
+mov @5,5(r3)
+mov @5,@5(r3)
+

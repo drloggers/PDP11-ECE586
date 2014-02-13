@@ -100,9 +100,14 @@ else
       begin
       done=1;
     end
-		else if(instruction == NOP)
+		if(instruction == NOP)
 		begin  					///do nothing
 		end
+		if(instruction[15:6] == 10'b0000000011)
+				begin
+					if(call_Swab(instruction))
+						$display("swab failed");
+				end
     
   else
     begin
@@ -120,26 +125,20 @@ else
 									if(JSR_instruction(instruction))
 										$display("Invalid Instruction");
 							end
-					else begin
-          $display("The Instruction is of Type Single Operand Instruction");
-          if(single_operand(instruction))
-						$display("Invalid Instruction");
+							else begin
+          			$display("The Instruction is of Type Single Operand Instruction");
+          			if(single_operand(instruction))
+								$display("Invalid Instruction");
+							end
 					end
-					end
-				else if(instruction[9:8] == 2'b00)
-				begin
-					if(call_Swab(instruction))
-						$display("swab failed");
-				end
-        else
+				else 
           begin
           $display("The instruction is of Type Condition Branch Instruction OR Zero Operand");
           if(Branch_instruction(instruction))
 						$display("Invalid Instruction");
-        end
-      end
+      		end
      
-      
+      end
       3'b111:
       begin
         $display("The instruction is of Type 1 & 1/2 Operand Instruction\n these do not exist in PDP11/20");
@@ -161,7 +160,7 @@ else
          if(displayMemory(showMemory));
         if(displayRegister(showRegisters));
         if(displayPSW(showPSW)); 
-         
+         $display("Instruction currently performed : %o",instruction);
          $display("Type run and hit Enter to Step");
          $stop;
        end
@@ -171,6 +170,7 @@ else
     if(displayMemory(showMemory));
     if(displayRegister(showRegisters));
     if(displayPSW(showPSW)); 
+		$display("Total Instructions = %d",instruction_count);
     end
 
    function call_Swab;

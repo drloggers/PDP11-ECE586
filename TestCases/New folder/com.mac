@@ -1,0 +1,9 @@
+inc r0
+dec r0
+neg r0
+adc r1 
+sbc r1
+ror r2
+rol r2
+asr r3
+asl r3
