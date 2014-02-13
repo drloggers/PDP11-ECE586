@@ -7,7 +7,8 @@ parameter debug=0,
 
 parameter showPSW = 1,
           showRegisters = 1,
-          showMemory = 1;
+          showMemory = 1,
+          instruction_type = 0;
 
 
 //Parameters of PSW

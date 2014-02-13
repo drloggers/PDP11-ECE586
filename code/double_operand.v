@@ -185,8 +185,7 @@ begin
             result=source_data+destination_data;
             if(write(instruction[5:3],instruction[2:0],result[15:0],data_type))
             $display("Error during ADD Instruction");
-            
-$display("result %o",result);
+
             if((~data_type && !(result[15:0])) || (data_type && !(result[7:0])))
              PSW[ZERO]=1;
            else 
@@ -209,41 +208,7 @@ $display("result %o",result);
                  
 						end
           end
-          
-      /*    SUB:
-          begin
-            if(data_type)
-              $display("Error: ADD Byte Instruction is not present");
-              
-            source_data=read(instruction[11:9],instruction[8:6],data_type);
-            destination_data=read(instruction[5:3],instruction[2:0],data_type);
-            
-             result=destination_data-source_data;
-            if(write(instruction[5:3],instruction[2:0],result,data_type))
-            $display("Error during SUB Instruction");
-            
-            if((~data_type && !(result)) || (data_type && !(result[7:0])))
-             PSW[ZERO]=1;
-           else 
-             PSW[ZERO]=0;
-             
-            if(result[15-data_type*8])
-             PSW[NEGATIVE]=1;
-           else
-             PSW[NEGATIVE]=0;
-             
-             if(result[16-data_type*8])
-               PSW[CARRY]=1;
-             else
-               PSW[CARRY]=0;
-               
-               if((source_data[15-data_type*8]!=destination_data[15-data_type*8])&&result[15-data_type*8]==source_data[15-data_type*8])
-                 PSW[OVERFLOW]=1;
-               else
-                 PSW[OVERFLOW]=0;
-                 
-          end
-*/          default:
+          default:
           begin
             //Error- Invalid Instruction
             double_operand=1;

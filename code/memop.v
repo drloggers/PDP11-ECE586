@@ -19,7 +19,6 @@ function mem_fill;
   begin
       
     scan_file=$fscanf(data_file,"%c%o\n",character,instruction);
-    $display("character : %c instruction : %o",character,instruction);
     eof=$feof(data_file);
    
     

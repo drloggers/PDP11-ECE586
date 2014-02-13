@@ -121,19 +121,19 @@ else
 					begin
 							if(instruction[11:9] == 3'b100)
 							begin
-									$display("The Instruction is JSR Instruction");
+									if(instruction_type)$display("The Instruction is JSR Instruction");
 									if(JSR_instruction(instruction))
 										$display("Invalid Instruction");
 							end
 							else begin
-          			$display("The Instruction is of Type Single Operand Instruction");
+          			if(instruction_type)$display("The Instruction is of Type Single Operand Instruction");
           			if(single_operand(instruction))
 								$display("Invalid Instruction");
 							end
 					end
 				else 
           begin
-          $display("The instruction is of Type Condition Branch Instruction OR Zero Operand");
+          if(instruction_type)$display("The instruction is of Type Condition Branch Instruction OR Zero Operand");
           if(Branch_instruction(instruction))
 						$display("Invalid Instruction");
       		end
@@ -141,12 +141,12 @@ else
       end
       3'b111:
       begin
-        $display("The instruction is of Type 1 & 1/2 Operand Instruction\n these do not exist in PDP11/20");
+        if(instruction_type)$display("The instruction is of Type 1 & 1/2 Operand Instruction\n these do not exist in PDP11/20");
       end
       
       default:
       begin
-      $display("The instruction is of Type Double Operand Instruction");
+      if(instruction_type)$display("The instruction is of Type Double Operand Instruction");
       //Call function that takes care of these type of instructions
       if(double_operand(instruction))
         $display("Invalid Instruction");
