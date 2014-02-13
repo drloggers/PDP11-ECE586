@@ -1,5 +1,5 @@
 /*
- Portland State Uuniversity
+ Portland State University
  Maseeh College of Engineering & Computer Science
  ECE 586 Computer Architecure Winter 2014
  PDP-11/20 Instruction Set Architecture Simulator 
@@ -126,7 +126,7 @@ else
 						$display("Invalid Instruction");
 					end
 					end
-				else if(instruction[8:6] == 3'b011)
+				else if(instruction[9:8] == 2'b00)
 				begin
 					if(call_Swab(instruction))
 						$display("swab failed");
