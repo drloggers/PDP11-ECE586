@@ -61,7 +61,7 @@ function Branch_instruction;
           begin
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BMI",R[PC]+TargetAddress,1);
             R[PC]= (R[PC]+TargetAddress);
-            PSW[PSW[NEGATIVE]] = 0;
+            PSW[NEGATIVE] = 0;
           end
         else
           $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BMI",R[PC]+TargetAddress,0);
@@ -199,6 +199,11 @@ function Branch_instruction;
           
           SEN:
           PSW[NEGATIVE] = 1'b1;
+
+					default: begin
+							if(jump_instruction(instruction))
+											$display("JMP/RTS failed");
+					end
             
       endcase
      end

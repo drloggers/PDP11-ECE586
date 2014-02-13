@@ -10,7 +10,7 @@ function displayMemory;
 	 for(i=0;i<=MSIZE;i=i+1)
 		begin
         if (mem[i]!== 8'bxxxxxxxx)
-					$display(" %d 		: %o",i,mem[i]);
+					$display(" %6o 		: %o",i,mem[i]);
 		end
 	displayMemory = 0;
 	end

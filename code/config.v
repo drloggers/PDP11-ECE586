@@ -2,7 +2,8 @@
 
 //Debug Options
 //Setting debug high does a memory fill upon initialization with its own index
-parameter debug=1;
+parameter debug=0,
+          step=1;
 
 parameter showPSW = 1,
           showRegisters = 1,
@@ -23,9 +24,11 @@ parameter PC=7,
 parameter MWIDTH=7,
           MSIZE=(64*1024)-1;          
           
+           
 //Parameter for HALT instruction
 
-parameter HALT  =  16'o000000;          
+parameter HALT  =  16'o000000,
+					NOP 	=  16'o000240;          
 //Parameters of MODE 
 
 parameter REGISTER               = 3'b000,
@@ -39,18 +42,13 @@ parameter REGISTER               = 3'b000,
                 
                 
 //Parameters of Double Operand Instructions & one and half operand instruction 
-parameter MOV  = 4'b0001,
-          MOVB = 4'b1001,
-          CMP  = 4'b0010,
-          CMPB = 4'b1010,
-          BIT  = 4'b0011,
-          BITB = 4'b1011,
-          BIC  = 4'b0100,
-          BICB = 4'b1100,
-          BIS  = 4'b0101,
-          BISB = 4'b1101,
-          ADD  = 4'b0110,
-          SUB  = 4'b1110;
+parameter MOV  = 3'b001,
+          CMP  = 3'b010,
+          BIT  = 3'b011,
+          BIC  = 3'b100,
+          BIS  = 3'b101,
+          ADD  = 3'b110,
+          SUB  = 3'b110;
           
 // Parameters for branch instruction 
 

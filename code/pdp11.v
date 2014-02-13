@@ -1,20 +1,37 @@
+/*
+ Portland State Uuniversity
+ Maseeh College of Engineering & Computer Science
+ ECE 586 Computer Architecure Winter 2014
+ PDP-11/20 Instruction Set Architecture Simulator 
+ by
+ Sameer Ghewari   PSUID-966754851   sghewari@pdx.edu
+ Sanket Borhade   PSUID-984706685   sanket@pdx.edu
+ Tejas Kulkarni   PSUID-          
+ Eshan Kanoje     PSUID-902098678	  ekanoje@pdx.edu     
+ */
+
 module pdp11;
 
+//Include config.v. Includes all parameters.
 `include"config.v"
+
   
-  
+//File handles 
 integer data_file;
 integer scan_file,eof;
 integer mem_fill_ptr;
 integer trace_file;
 integer branch_file;
 
+
 integer i;
 
+//String to hold input ascii file's name 
 reg [8*256:0] memory_image;
 
 reg [7:0]character;
 reg [15:0]instruction;
+
 integer instruction_count;
 
 reg [15:0]dummy;
@@ -24,7 +41,10 @@ reg done;
 
 reg [15:0]R[7:0];
 reg [15:0]PSW;
+
+//Declaration of memory
 reg [MWIDTH:0]mem[MSIZE:0];
+
 `include"memop.v"
 `include"read_word.v"
 `include"write_word.v"
@@ -34,8 +54,7 @@ reg [MWIDTH:0]mem[MSIZE:0];
 `include"jump.v"
 `include"stack_operation.v"
 `include"display_functions.v"
-
-
+`include"effective_address.v"
 
 
 
@@ -54,12 +73,7 @@ else
   $stop;
   end
   
-    if(debug)
-      begin
-        for(i=0;i<=(MSIZE);i=i+1)
-        mem[i]=i;
-      end
-
+    
  //Call to Memory Fill function. Reads specified file and copies in memory array  
     if(mem_fill(0))
       $display("Error reading memory image file");
@@ -67,21 +81,33 @@ else
 //Create/Open file specified_name_trace.txt in write mode for writing trace to  
     trace_file=$fopen({memory_image,"_trace.txt"},"w");
     branch_file=$fopen({memory_image,"_branch.txt"},"w");
-//Execution starts here
-   done=0;
     
+
+   done=0;
+   instruction_count=0;
+	 R[SP] = 16'o177776;
+        
     while(done!=1)
     begin
       
-      //Instruction Fetch
+    //Instruction Fetch
     instruction=mem_read(R[PC],word,inst);
     R[PC]=R[PC]+2;
+    instruction_count=instruction_count+1;
     
     //Instruction Decode+Execute beyond here
     if(instruction==HALT)
+      begin
       done=1;
+    end
+		else if(instruction == NOP)
+		begin  					///do nothing
+		end
+    
+  else
+    begin
       
-      
+     
     case(instruction[14:12])
       
       3'b000:
@@ -92,7 +118,7 @@ else
 							begin
 									$display("The Instruction is JSR Instruction");
 									if(JSR_instruction(instruction))
-										$display("");$display("Invalid Instruction");
+										$display("Invalid Instruction");
 							end
 					else begin
           $display("The Instruction is of Type Single Operand Instruction");
@@ -128,6 +154,18 @@ else
             
     end
     endcase
+    
+     if(step)
+       begin
+         //call display functions here
+         if(displayMemory(showMemory));
+        if(displayRegister(showRegisters));
+        if(displayPSW(showPSW)); 
+         
+         $display("Type run and hit Enter to Step");
+         $stop;
+       end
+     end
     end
     
     if(displayMemory(showMemory));
@@ -140,10 +178,10 @@ else
 		reg [15:0]result;
 		reg [7:0]swapingReg;
 		begin
-					result = read_word(instruction[5:3],instruction[2:0]);
+					result = read(instruction[5:3],instruction[2:0],word);
 					swapingReg = result[7:0];
 					result = {swapingReg,result[15:8]};
-					if(write_word(instruction[5:3],instruction[2:0],result))
+					if(write(instruction[5:3],instruction[2:0],result,word))
 						$display("Error during SWAB instruction");
 
 					if(result[7:0] == 0)

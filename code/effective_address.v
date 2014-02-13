@@ -1,68 +1,66 @@
 //Function to find MODE and SOURCE.
 //This function returns 16 bit value from appropriate Source in given Mode 
 
-function [15:0]read;
+function [15:0]effective_address;
    input[2:0]mode;
   input[2:0]source;
-  input data_type;
-  
-  reg[15:0] address;
+	input data_type;
+
   reg[15:0] X;
   
   begin
     case(mode)
-      REGISTER:
-      begin
-        read = R[source];
-      end
-      
+			
+			REGISTER:
+			begin
+				$display("Register Mode does not require effective address calculation, check for error in calling level");
+			end
+           
       REGISTER_DEFERRED:
       begin
-       read = mem_read(R[source],data_type,data);
+       effective_address = R[source];
       end
       
       AUTOINCREMENT:
       begin
-        read = mem_read(R[source],data_type,data);
+        effective_address=R[source];
         R[source] = R[source]+2**(~data_type);
       end
       
       AUTOINCREMENT_DEFERRED:
       begin
-         address = mem_read(R[source],word,data);			/// do we really need word here or it should be data_type!!!
-        read = mem_read(address,data_type,data);
-        R[source] = R[source]+2;
+         effective_address = mem_read(R[source],word,data);			
+         R[source] = R[source]+2;
       end
       
       AUTODECREMENT:
       begin
         R[source] = R[source]-2**(~data_type);
-        read = mem_read(R[source],data_type,data);
+        effective_address = R[source];
       end
       
       AUTODECREMENT_DEFERRED:
       begin
         R[source] = R[source]-2;
-        address = mem_read(R[source],word,data);			/// do we really need word here or it should be data_type!!!
-        read = mem_read(address,data_type,data);
+        effective_address = mem_read(R[source],word,data);			
       end
       
       			INDEX:
 			begin
 			 X = mem_read(R[PC],word,data);
-		   read = mem_read(R[source]+X,data_type,data);
-		   R[PC] = R[PC]+2;
+			 R[PC] = R[PC]+2;
+		   effective_address = R[source]+X;
+		   
 			end
     			INDEX_DEFERRED:
 			begin
 	     X = mem_read(R[PC],word,data);					/// do we really need word here or it should be data_type!!!
-	     address = mem_read(R[source]+X,word,data);
-			 read = mem_read(address,data_type,data);
-		   R[PC]=R[PC]+2;
+ 		   R[PC]=R[PC]+2;
+	     effective_address = mem_read(R[source]+X,data_type,data);
 	    end
 			default:begin
 				$display("This Addressing mode is not supported by this version of PDP11.");
-				read = 1;
+				
 			end    endcase
     end
 endfunction  

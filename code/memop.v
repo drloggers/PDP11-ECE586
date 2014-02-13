@@ -13,14 +13,15 @@ function mem_fill;
     
      eof=$feof(data_file);
      mem_fill_ptr=0;
-    
+     R[PC]=0;
+
     while(!eof)
   begin
       
     scan_file=$fscanf(data_file,"%c%o\n",character,instruction);
     $display("character : %c instruction : %o",character,instruction);
     eof=$feof(data_file);
-   R[PC]=0;
+   
     
     if(character == "@")
       begin
@@ -48,20 +49,20 @@ function [15:0]mem_read;
   input byte_read;
   input Instruction_Read;
 
-  reg [7:0]result;
+  reg [15:0]result;
   
   begin
     
     if(!byte_read & address[0])
-      $display("Error in Address. Expected word aligned address but obtained %o",address);
+      $display("Error Alignment. Expected word aligned address but obtained  non-word aligned address %o",address);
       
       
     if(byte_read)  
       begin
       
 	result = mem[address];
-		if (result === 8'bxxxxxxxx)
-			$display("Error : You are trying to access garbage data!");
+		if (result[7:0] === {8{1'bx}})
+			$display("Warning : Read access from a memory location %6o that was never written",address);
 		else
 		begin
     mem_read=result;
@@ -74,7 +75,13 @@ function [15:0]mem_read;
 end
   else
     begin
-    mem_read={mem[address+1],mem[address]};
+      $display("%o  %o",mem[address+1],mem[address]);
+      result={mem[address+1],mem[address]};
+      if (result === {16{1'bx}})
+			$display("Warning : Read access from a memory location %6o that was never written",address);
+			
+    
+    
     
     //Trace generation 
       if(Instruction_Read)
@@ -83,6 +90,8 @@ end
         end
     else
       $fwrite(trace_file,"%0d %6o\n%0d %6o\n",data_read,address,data_read,address+1);
+      
+      mem_read=result;
     end
 
   end
@@ -99,7 +108,7 @@ function mem_write;
   begin
     
     if(!byte_write & address[0])
-      $display("Error in Address during right. Expected word aligned address but obtained %o",address);
+      $display("Error in Alignment during Write. Expected word aligned address but obtained %o",address);
       
     if(byte_write)  
     begin
@@ -109,7 +118,7 @@ function mem_write;
   else
     begin
        {mem[address+1],mem[address]}=data;
-       $fwrite(trace_file,"%0d %6o\n%0d %6o",data_write,address,data_write,address+1);
+       $fwrite(trace_file,"%0d %6o\n%0d %6o\n",data_write,address,data_write,address+1);
     end
     
    

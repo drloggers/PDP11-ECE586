@@ -2,7 +2,7 @@
 
 function jump_instruction;  
   input [15:0]instruction;
-  input [15:0]result;  
+  reg [15:0]result;  
     begin      
       jump_instruction = 0;      
       case(instruction[8:6])       
@@ -14,7 +14,7 @@ function jump_instruction;
               end             
              else
                begin
-                result = read_word(instruction[5:3], instruction[2:0]);
+                result = effective_address(instruction[5:3], instruction[2:0],instruction[15]);
                 if(result%2 == 0)
                 begin
                   $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"JMP",result,1);
@@ -26,7 +26,7 @@ function jump_instruction;
          end          
            RTS:
            begin
-                result = read_word(instruction[5:3],instruction[2:0]);
+								result = read(instruction[5:3],instruction[2:0],instruction[15]);
                 $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"RTS",result,1);
                 R[PC] = result;          
                 R[instruction[2:0]] = pop(0);    
