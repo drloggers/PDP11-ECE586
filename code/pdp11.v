@@ -6,7 +6,7 @@
  by
  Sameer Ghewari   PSUID-966754851   sghewari@pdx.edu
  Sanket Borhade   PSUID-984706685   sanket@pdx.edu
- Tejas Kulkarni   PSUID-          
+ Tejas Kulkarni   PSUID-915828294		tpk2@pdx.edu          
  Eshan Kanoje     PSUID-902098678	  ekanoje@pdx.edu     
  */
 
@@ -142,7 +142,7 @@ else
       
       3'b111:
       begin
-        $display("The instruction is of Type 1 & 1/2 Operand Instruction");
+        $display("The instruction is of Type 1 & 1/2 Operand Instruction\n these do not exist in PDP11/20");
       end
       
       default:
