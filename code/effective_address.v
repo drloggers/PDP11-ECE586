@@ -1,5 +1,5 @@
-//Function to find MODE and SOURCE.
-//This function returns 16 bit value from appropriate Source in given Mode 
+//Function to find effective address
+//This function returns 16 bit effective address 
 
 function [15:0]effective_address;
    input[2:0]mode;

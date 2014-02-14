@@ -1,4 +1,4 @@
-//This function handles instruction of type Double Operand 
+//This function handles instruction of type Single Operand 
 
 function single_operand;
   input[15:0]instruction;
@@ -218,7 +218,7 @@ function single_operand;
 						PSW[OVERFLOW] = PSW[NEGATIVE]^PSW[CARRY];
 				end
 
-					ROL:
+				ROL:
 				begin
 				tempbit = PSW[CARRY];
 			  temp = {PSW[CARRY], read(instruction[5:3],instruction[2:0],data_type)};
@@ -244,7 +244,7 @@ function single_operand;
 				  ASR:
 				begin
 			   temp = {read(instruction[5:3],instruction[2:0],data_type), PSW[CARRY]};
-			   tempbit = temp[15];
+			   tempbit = temp[16];
 			   temp = temp >> 1;
 			   PSW[CARRY] = temp[0];
 			   temp[16] = tempbit;
@@ -317,14 +317,6 @@ reg [15:0]temp;
 reg [15:0]result;
 reg dummy;
 begin
-	/*temp = instruction[5:0];
-	result = read(instruction[5:3],instruction[2:0],word);
-	dummy = push(read(0,instruction[8:6],word));
-	R[instruction[8:6]] = R[PC];
-	$fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"JSR",temp,1);
-	R[PC] = temp;
-	JSR_instruction = 0;*/
-	
   result = effective_address(instruction[5:3],instruction[2:0],instruction[15]);
 	dummy = push(R[instruction[8:6]]);
 	R[instruction[8:6]] = R[PC];

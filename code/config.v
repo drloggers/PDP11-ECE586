@@ -3,7 +3,7 @@
 //Debug Options
 //Setting debug high does a memory fill upon initialization with its own index
 parameter debug=0,
-          step=1;
+          step=0;
 
 parameter showPSW = 1,
           showRegisters = 1,
@@ -96,12 +96,12 @@ parameter CLR  = 5'b01000,
 					
 // Conditional Codes
 parameter  	CLC = 16'o000241,
-          	CLV = 16'o000242,
-          	CLZ = 16'o000244,
-         		CLN = 16'o000250,
+          	 CLV = 16'o000242,
+          	 CLZ = 16'o000244,
+         		 CLN = 16'o000250,
          	 	SEC = 16'o000261,
          	 	SEV = 16'o000261,
-          	SEZ = 16'o000264,
+          	 SEZ = 16'o000264,
          	 	SEN = 16'o000270;
          	 	
          	 	

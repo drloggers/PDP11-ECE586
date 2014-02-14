@@ -1,5 +1,4 @@
 
-
 function push;
 input [15:0]data;
 begin

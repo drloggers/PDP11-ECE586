@@ -1,0 +1,8 @@
+mov #02,r4
+jsr r4,calling
+mov #02,r0
+mov #03,r1
+calling: mov #99.,r1
+rts r4
+jmp calling
+nop

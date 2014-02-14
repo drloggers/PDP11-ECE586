@@ -1,9 +1,7 @@
 //Memory Read/Write functions
 
 
-
-//This function reads a byte from specified address from the memory 
-
+//Memfill fills memory array with specified ascii image file 
 function mem_fill;
   input dummy;
   
@@ -43,6 +41,7 @@ function mem_fill;
 endfunction
 
 
+//Mem read function returns word/byte from specified memory address
 function [15:0]mem_read;
   input [15:0]address;
   input byte_read;
@@ -97,7 +96,7 @@ end
 endfunction
 
   
-  
+  //Mem write function writes word/byte to specified memory address
 function mem_write;
   input [15:0]address;
   input [15:0]data;

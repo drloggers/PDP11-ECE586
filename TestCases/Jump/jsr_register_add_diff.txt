@@ -1,0 +1,7 @@
+mov #04,r4
+mov #112,r1
+jsr r4,@(r1)+
+mov #100,r0
+.=.+200
+mov #02,r3
+rts r4

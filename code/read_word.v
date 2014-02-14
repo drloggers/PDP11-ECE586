@@ -1,5 +1,5 @@
-//Function to find MODE and SOURCE.
-//This function returns 16 bit value from appropriate Source in given Mode 
+//Function to read from MODE and SOURCE.
+//This function returns 16/8 bit value from appropriate Source in given Mode 
 
 function [15:0]read;
    input[2:0]mode;
@@ -29,7 +29,7 @@ function [15:0]read;
       
       AUTOINCREMENT_DEFERRED:
       begin
-         address = mem_read(R[source],word,data);			/// do we really need word here or it should be data_type!!!
+         address = mem_read(R[source],word,data);		
         read = mem_read(address,data_type,data);
         R[source] = R[source]+2;
       end
@@ -43,7 +43,7 @@ function [15:0]read;
       AUTODECREMENT_DEFERRED:
       begin
         R[source] = R[source]-2;
-        address = mem_read(R[source],word,data);			/// do we really need word here or it should be data_type!!!
+        address = mem_read(R[source],word,data);		
         read = mem_read(address,data_type,data);
       end
       
@@ -55,7 +55,7 @@ function [15:0]read;
 			end
     			INDEX_DEFERRED:
 			begin
-	     X = mem_read(R[PC],word,data);					/// do we really need word here or it should be data_type!!!
+	     X = mem_read(R[PC],word,data);					
 	     address = mem_read(R[source]+X,word,data);
 			 read = mem_read(address,data_type,data);
 		   R[PC]=R[PC]+2;

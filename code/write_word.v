@@ -1,11 +1,11 @@
-//Function to find MODE and destination.
+//Function to write byte/word to specific MODE and destination.
 //This function stores 16 bit value to appropriate destination in given Mode 
 
 function write;
   input[2:0]mode;
   input[2:0]destination;
   input[15:0]data_to_write;
-   input data_type;
+   input data_type;w
   
   reg temp;
   reg [15:0]address;
@@ -35,7 +35,7 @@ function write;
       
       AUTOINCREMENT_DEFERRED:
       begin
-        address=mem_read(R[destination],data,word); 		/// do we really need word here or it should be data_type!!!
+        address=mem_read(R[destination],data,word); 		
         if(mem_write(address,data_to_write,data_type))
           $display("Error during write in Autoincrement Deferred");
         
@@ -52,22 +52,22 @@ function write;
       AUTODECREMENT_DEFERRED:
       begin
         R[destination]=R[destination]-2;
-        address=mem_read(R[destination],data,word);		/// do we really need word here or it should be data_type!!!
+        address=mem_read(R[destination],data,word);		
         if(mem_write(address,data_to_write,data_type))
         $display("Error during write in Autoincrement Deferred");
        
       end
       
       			INDEX:
-      begin	     		   X=mem_read(R[PC],word,data);							/// do we really need word here or it should be data_type!!!
+      begin	     		   X=mem_read(R[PC],word,data);						
        if(mem_write(R[destination]+X,data_to_write,data_type))
           $display("Error during write in Index");
         		 R[PC]=R[PC]+2;
   		end
     		  INDEX_DEFERRED:
 		  begin
-		   X=mem_read(R[PC],word,data);			/// do we really need word here or it should be data_type!!!
-	     address=mem_read(R[destination]+X,word,data);			/// do we really need word here or it should be data_type!!!
+		   X=mem_read(R[PC],word,data);			
+	     address=mem_read(R[destination]+X,word,data);			
 		   if(mem_write(address,data_to_write,data_type))
         $display("Error during write in Index Deferred");
       		   R[PC]=R[PC]+2;
