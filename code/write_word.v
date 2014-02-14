@@ -5,7 +5,7 @@ function write;
   input[2:0]mode;
   input[2:0]destination;
   input[15:0]data_to_write;
-   input data_type;w
+   input data_type;
   
   reg temp;
   reg [15:0]address;
