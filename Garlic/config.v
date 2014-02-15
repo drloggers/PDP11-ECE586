@@ -3,7 +3,7 @@
 //Debug Options
 //Setting debug high does a memory fill upon initialization with its own index
 parameter debug=0,
-          step=0;
+          step=1;
 
 parameter showPSW = 1,
           showRegisters = 1,

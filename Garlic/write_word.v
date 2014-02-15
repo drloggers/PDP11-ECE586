@@ -30,7 +30,7 @@ function write;
         if(mem_write(TR[destination],data_to_write,data_type))
           $display("Error during write in Autoincrement");
               
-         R[destination]=TR[destination]+2**(~data_type);
+         TR[destination]=TR[destination]+2**(~data_type);
       end
       
       AUTOINCREMENT_DEFERRED:
