@@ -176,7 +176,12 @@ function Branch_instruction;
             $fwrite(branch_file,"%6o %s %6o %0d\n",R[PC],"BLOS",R[PC]+TargetAddress,0);
           end
             
-         CLC:
+         
+
+					default: begin
+							case(instruction)
+						
+					CLC:
           PSW[CARRY] = 1'b0;
           
           CLV:
@@ -199,10 +204,13 @@ function Branch_instruction;
           
           SEN:
           PSW[NEGATIVE] = 1'b1;
-
-					default: begin
-							if(jump_instruction(instruction))
+					default:
+								begin
+										if(jump_instruction(instruction))
 											$display("JMP/RTS failed");
+								end
+							endcase
+							
 					end
             
       endcase
