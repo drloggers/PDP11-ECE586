@@ -83,10 +83,10 @@ end
     //Trace generation 
       if(Instruction_Read)
         begin
-      $fwrite(trace_file,"%0d %6o\n%0d %6o\n",instruction_fetch,address,instruction_fetch,address+1);
+      $fwrite(trace_file,"%0d %6o\n",instruction_fetch,address);
         end
     else
-      $fwrite(trace_file,"%0d %6o\n%0d %6o\n",data_read,address,data_read,address+1);
+      $fwrite(trace_file,"%0d %6o\n",data_read,address);
       
       mem_read=result;
     end
@@ -115,7 +115,7 @@ function mem_write;
   else
     begin
        {mem[address+1],mem[address]}=data;
-       $fwrite(trace_file,"%0d %6o\n%0d %6o\n",data_write,address,data_write,address+1);
+       $fwrite(trace_file,"%0d %6o\n",data_write,address);
     end
     
    
