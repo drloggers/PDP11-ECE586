@@ -13,7 +13,7 @@ function [15:0]effective_address;
 			
 			REGISTER:
 			begin
-				$display("Register Mode does not require effective address calculation, check for error in calling level");
+				effective_address = 1'bx;
 			end
            
       REGISTER_DEFERRED:

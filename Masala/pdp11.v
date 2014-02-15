@@ -42,7 +42,6 @@ reg done;
 //Declaration of Register File & PSW 
 
 reg [15:0]R[7:0];
-reg [15:0]TR[7:0];
 reg [15:0]PSW;
 
 //Declaration of memory
@@ -97,9 +96,6 @@ else
     instruction=mem_read(R[PC],word,inst);
     R[PC]=R[PC]+2;
     instruction_count=instruction_count+1;
-    
-    for(i=0;i<8;i=i+1)
-    TR[i]=R[i];
     
     //Instruction Decode+Execute beyond here
     if(instruction==HALT)

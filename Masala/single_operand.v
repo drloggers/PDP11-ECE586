@@ -12,9 +12,9 @@ function single_operand;
 	  
 		single_operand = 0;
 		data_type=instruction[15];
-		SEAddress = effective_address(instruction[5:3],instruction[2:0],data_type);
-		DEAddress = effective_address(instruction[5:3],instruction[2:0],data_type);
 		
+		DEAddress = effective_address(instruction[5:3],instruction[2:0],data_type);
+		SEAddress = DEAddress;
 			case(instruction[10:6])
 				CLR:
 				begin
